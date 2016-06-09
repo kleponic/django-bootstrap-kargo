@@ -41,7 +41,7 @@ class ODOrder(CommonInfo):
     price = models.DecimalField(**AMOUNT_MONEY)
 
     def __unicode__(self):
-        return '{}'.format(self.user.username)
-
+        # return '{}'.format(self.user.username)
+        return self.name
     class Meta:
         verbose_name_plural = "Customer"

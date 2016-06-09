@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block header %} {% endblock header %}
+{% block smalltitle %} Customer Management {% endblock %}
+
+{% block content %}
+
+<!-- Main Content -->
+<div class="row">
+    <div class="col-xs-12">
+
+        {% for message in messages %}
+            <h4{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h4>
+        {% endfor %}
+
+        <div class="widget">
+            <div class="widget-body">
+                <a href="{% url 'vehicle:create_vehicle' %}"><button type="button" class="btn btn-primary"><i class=" fa fa-plus"></i> Create a New</button></a></a>
+                <hr/>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Driver</th>
+                            <th>Number</th>
+                            <th>Capacity</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- more info about forloop : https://docs.djangoproject.com/en/1.9/ref/templates/builtins/#for -->
+
+                        {% for vehicle in vehicles %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ vehicle.name }}</td>
+                            <td>{{ vehicle.driver }}</td>
+                            <td>{{ vehicle.number }}</td>
+                            <td>{{ vehicle.capacity }}</td>
+                            <td> <img src="{{ vehicle.photo.url }}" alt="{{ vehicle.name }}" height="100" width="120"/></td>
+                            <td>
+                                <a class="btn btn-info btn-xs" href="{% url 'vehicle:edit_vehicle' vehicle.uuid %}"><i class=" fa fa-edit"></i> Edit<a/>
+                                <a class="btn btn-danger btn-xs" href="{% url 'vehicle:delete_vehicle' vehicle.uuid %}"><i class=" fa fa-trash"></i> Delete<a/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

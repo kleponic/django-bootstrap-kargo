@@ -13,11 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from orders import views as orders_views
 from orders import urls as orders_url
+
+from vehicles import views as vehicles_views
+from vehicles import urls as vehicles_url
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),  # admin site
@@ -27,4 +32,8 @@ urlpatterns = [
 
     # linked url in module orders from main urls.py to app url
     url(r'^order/', include(orders_url, namespace="order")),
-]
+    url(r'^vehicle/', include(vehicles_url, namespace="vehicle")),
+
+] 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
